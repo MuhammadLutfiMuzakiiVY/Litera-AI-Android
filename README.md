@@ -1,46 +1,78 @@
-# LITERA-AI
+# 📱 Litera-AI Monorepo (Mobile & Services)
 
-LITERA-AI (Literacy Intelligent Assistant) is an adaptive learning mobile application for Android and iOS. It combines Flutter, FastAPI, PostgreSQL, Redis, and predictive AI models for diagnostic assessment, knowledge tracing, and dynamic difficulty adjustment.
+[![Flutter](https://img.shields.io/badge/Flutter-3.x-blue?style=for-the-badge&logo=flutter)](https://flutter.dev/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-green?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com/)
+[![Python](https://img.shields.io/badge/Python-3.10+-blue?style=for-the-badge&logo=python)](https://www.python.org/)
+[![Docker](https://img.shields.io/badge/Docker-Enabled-blue?style=for-the-badge&logo=docker)](https://www.docker.com/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Active-blue?style=for-the-badge&logo=postgresql)](https://www.postgresql.org/)
 
-## Workspace
+> **LITERA-AI App** is the core monorepo hosting the mobile application, high-performance FastAPI backend, and custom predictive AI algorithms for the Adaptive Literacy platform.
+
+---
+
+## 📂 Workspace Structure
 
 ```text
 apps/
-  mobile/   Flutter application
-  backend/  FastAPI backend
-  ai/       AI inference/training package
-docs/       Design and planning artifacts
-infra/      Docker, Nginx, CI/CD support
+  ├── mobile/         # Flutter mobile application (Android & iOS)
+  ├── backend/        # Python FastAPI backend service
+  └── ai/             # DDA decision models and knowledge tracing engine
+docs/                 # Visual diagrams, wireframes, and design specs
+infra/                # Docker configuration, Nginx setup, CI/CD scripts
 ```
 
-For mobile development, open only `apps/mobile` as the Flutter project. The mobile app files are unified there: `lib`, `assets`, `test`, and `pubspec.yaml`.
+---
 
-## Current Status
+## ✨ Monorepo Features
 
-The workspace now contains a production-oriented starter implementation:
+- **📱 Flutter Mobile App**:
+  - Implements Material 3 responsive styling and adaptive Dark/Light modes.
+  - State management powered by **Riverpod** and robust routing with **GoRouter**.
+  - **Offline-First Storage**: Cached locally using Hive, with an automated offline sync queue and connection status banner.
+  - Complete workflow screens: Auth, diagnostic assessments, learning logs, profiles, and teacher dashboard monitors.
 
-- Mobile app shell, Material 3 theme, dark mode, GoRouter, and Riverpod state flow.
-- Auth, onboarding, profile completion, diagnostic assessment, adaptive learning, adaptive quiz, history, settings, and teacher monitoring screens.
-- Offline/online mobile mode with Hive cache, persistent outbox queue, sync banner, and manual sync action.
-- FastAPI backend skeleton with versioned REST routes, mock store, SQLAlchemy models, Alembic migration, and sync endpoints.
-- AI inference package for diagnostic classification, knowledge tracing, and DDA decision logic.
-- Docker, Nginx, CI workflow, and design/planning documentation.
+- **⚡ FastAPI Backend**:
+  - Structured, asynchronous endpoints using SQLAlchemy and Alembic migrations.
+  - Versioned API design (`/api/v1/...`).
+  - Integrated with Redis for caching and rapid session management.
 
-## Local Development
+- **🤖 Predictive AI Module**:
+  - Knowledge tracing calculations using student history data.
+  - Dynamic Difficulty Adjustment (DDA) to recommend suitable literacy contents.
 
-Flutter SDK is required to run the mobile app:
+---
 
+## 🚀 Setup & Execution Guide
+
+### 📱 1. Mobile Application (Flutter)
 ```bash
 cd apps/mobile
 flutter pub get
 flutter run
 ```
 
-Python/FastAPI dependencies are required to run the backend:
-
+### ⚡ 2. Backend Server (FastAPI)
+Create a `.env` in `apps/backend/` and configure:
+```env
+DATABASE_URL="postgresql+asyncpg://postgres:postgres@localhost:5432/litera_backend"
+REDIS_URL="redis://localhost:6379/0"
+```
+Install dependencies and run:
 ```bash
 cd apps/backend
 python -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 pip install -e ".[dev]"
 uvicorn app.main:app --reload
 ```
+
+---
+
+## 🛠️ Infrastructure & Deployment
+
+You can stand up the entire system (Backend, Database, Cache) using Docker Compose:
+```bash
+cd infra/docker
+docker-compose up -d
+```
+All traffic is routed smoothly through the Nginx reverse proxy configuration found in `infra/nginx/`.
