@@ -20,6 +20,23 @@
 ### Mengapa Monorepo?
 Untuk menjaga konsistensi tipe data, kecepatan sinkronisasi REST API, dan kemudahan deployment, seluruh komponen seluler, backend, dan AI disatukan dalam struktur repositori tunggal ini. Ini mempermudah tim pengembang melakukan pengujian integrasi (integration testing) secara simultan antara klien seluler Dart/Flutter dengan API server berbasis Python/FastAPI.
 
+### 🔄 Alur Penggunaan Aplikasi (Application Workflow)
+
+Sistem Litera-AI bekerja secara end-to-end melalui tahapan berikut untuk memberikan bimbingan belajar literasi sastra yang adaptif:
+
+1. **Pendaftaran Akun & Penentuan Peran (Multi-Role Authentication)**:
+   - Pengguna (Murid, Guru, Orang Tua) mendaftar dan masuk ke sistem menggunakan autentikasi JWT-OTP yang aman di aplikasi mobile atau web control center.
+2. **Asesmen Diagnostik Awal (Initial Diagnostic Assessment)**:
+   - Saat murid pertama kali membuka aplikasi mobile, mereka wajib mengikuti kuis asesmen awal untuk menilai tingkat pemahaman membaca (reading level: Pemula, Menengah, Mahir).
+3. **Pemetaan Jalur Belajar Personal (Personalized Learning Path)**:
+   - Berdasarkan hasil asesmen, mesin AI menentukan daftar novel sastra klasik Indonesia yang paling cocok untuk dibaca oleh murid tersebut.
+4. **Membaca dengan Asisten Interaktif (Interactive Reading)**:
+   - Murid membaca naskah sastra klasik di aplikasi. Saat menemui kosakata sulit atau majas, murid dapat menekan teks tersebut untuk mendapatkan penjelasan konteks instan dari asisten AI.
+5. **Kuis Evaluasi Adaptif (Adaptive Quizzing & DDA)**:
+   - Setelah menyelesaikan bab membaca, murid mengerjakan kuis. Mesin AI (DDA) memantau akurasi jawaban dan durasi pengerjaan untuk menentukan tingkat kesulitan soal berikutnya secara dinamis.
+6. **Pemantauan Guru & Orang Tua (Teacher & Parent Monitoring)**:
+   - Seluruh data keaktifan dan perkembangan kognitif murid disinkronkan ke server. Guru dapat memantau dispersi nilai kelas di dashboard web, dan orang tua dapat membaca rekomendasi panduan membaca dari AI untuk diterapkan di rumah.
+
 ---
 
 ## 📂 2. Struktur Workspace & Penjelasan Modul (Workspace Structure)
