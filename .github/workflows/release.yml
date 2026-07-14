@@ -1,4 +1,4 @@
-name: Build and Release Android APK
+name: Build and Release Mobile Apps (Android & iOS)
 
 on:
   release:
@@ -41,3 +41,37 @@ jobs:
           files: apps/mobile/build/app/outputs/flutter-apk/app-release.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build-ipa:
+    runs-on: macos-14
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: Install dependencies
+        run: |
+          cd apps/mobile
+          flutter pub get
+
+      - name: Build iOS App (Unsigned IPA)
+        run: |
+          cd apps/mobile
+          flutter build ipa --release --no-codesign
+
+      - name: Package iOS Archive
+        run: |
+          cd apps/mobile/build/ios/archive
+          zip -r Runner.xcarchive.zip Runner.xcarchive
+
+      - name: Upload iOS Assets to Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: apps/mobile/build/ios/archive/Runner.xcarchive.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
