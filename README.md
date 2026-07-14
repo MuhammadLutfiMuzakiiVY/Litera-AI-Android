@@ -37,6 +37,25 @@ docs/                 # Dokumentasi diagram alur, API OpenAPI, ERD Database, & s
 infra/                # Konfigurasi orkestrasi Docker Compose dan reverse proxy Nginx
 ```
 
+### 📐 Arsitektur Sistem (System Architecture)
+
+```mermaid
+graph TD
+    subgraph Client_Space [Client Space]
+        A[Flutter Mobile Client] -->|offline cache| B[(Hive Local Cache)]
+        A -->|API Requests| C[Nginx Reverse Proxy]
+    end
+    subgraph Backend_Server [Backend Server]
+        C -->|routes to /api/v1| D[FastAPI Backend Server]
+        D -->|asynchronous ORM| E[(PostgreSQL Database)]
+        D -->|session caching| F[(Redis Cache)]
+    end
+    subgraph AI_Engine [AI Engine]
+        D -->|triggers KT & DDA| G[Predictive AI Engine]
+        G -->|Knowledge Tracing / DDA decisions| D
+    end
+```
+
 ---
 
 ## ✨ Fitur Utama Modul (Core Module Features)
